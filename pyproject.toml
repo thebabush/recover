@@ -16,6 +16,7 @@ dependencies = [
 
 [project.scripts]
 recover = "recover.__main__:main"
+recover-export = "recover.main:main"
 
 [tool.mypy]
 allow_redefinition = true

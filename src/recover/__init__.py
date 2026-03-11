@@ -34,9 +34,9 @@ __author__ = "Chariton Karamitas <huku@census-labs.com>"
 __all__ = ["export", "analyze"]
 
 
-def export(exporter: Exporter, path: str | Path) -> None:
+def export(exporter: Exporter, path: str | Path, dot: bool = False) -> None:
     logging.info("Exporting in %s", path)
-    exporter.export(path)
+    exporter.export(path, dot=dot)
     logging.info("Done")
 
 

@@ -22,13 +22,16 @@ __author__ = "Chariton Karamitas <huku@census-labs.com>"
 
 def main(argv: list[str] | None = None) -> int:
 
-    argv = argv or sys.argv
+    import argparse
 
-    if len(argv) < 2:
-        print(f"Usage: {argv[0]} <path-to-idb>", file=sys.stderr)
-        return 1
+    parser = argparse.ArgumentParser(description="Export IDA Pro database")
+    parser.add_argument("idb", type=Path, help="path to IDB file")
+    parser.add_argument(
+        "--dot", action="store_true", help="also export graphs as dot files"
+    )
+    args = parser.parse_args(argv)
 
-    idb_path = Path(argv[1]).resolve(strict=True)
+    idb_path = args.idb.resolve(strict=True)
 
     path = importlib.resources.files("recover.data") / "logging.ini"
     logging.config.fileConfig(str(path))
@@ -40,7 +43,7 @@ def main(argv: list[str] | None = None) -> int:
     ida_auto.auto_wait()
 
     exporter = ida_pro.IdaPro()
-    recover.export(exporter, idb_path.parent)
+    recover.export(exporter, idb_path.parent, dot=args.dot)
 
     idapro.close_database()
 

@@ -103,12 +103,13 @@ class Exporter(abc.ABC):
         """
         raise NotImplementedError
 
-    def export(self, path: Path | str, prefix: str = "") -> None:
+    def export(self, path: Path | str, prefix: str = "", dot: bool = False) -> None:
         """Start the exporter.
 
         Args:
             path: Path to base directory where exported data will be stored.
             prefix: Name prefix to use for files in `path`.
+            dot: If True, also export graphs as Graphviz dot files.
         """
         if isinstance(path, str):
             path = Path(path)
@@ -118,10 +119,19 @@ class Exporter(abc.ABC):
 
         self._logger.info("Exporting PDG")
         pdg = self.export_pdg()
+        afcg = pdg.get_afcg()
+        dfg = pdg.get_dfg()
+
         self._logger.info("Storing PDG, AFCG and DFG")
         pdg.store(path / f"{prefix}pdg.pcl")
-        pdg.get_afcg().store(path / f"{prefix}afcg.pcl")
-        pdg.get_dfg().store(path / f"{prefix}dfg.pcl")
+        afcg.store(path / f"{prefix}afcg.pcl")
+        dfg.store(path / f"{prefix}dfg.pcl")
+
+        if dot:
+            self._logger.info("Exporting graphs as dot files")
+            pdg.draw(path / f"{prefix}pdg.dot")
+            afcg.draw(path / f"{prefix}afcg.dot")
+            dfg.draw(path / f"{prefix}dfg.dot")
 
         self._logger.info("Exporting segments")
         segments = self.export_segments()
