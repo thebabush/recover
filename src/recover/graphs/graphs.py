@@ -7,15 +7,9 @@ from pathlib import Path
 
 import enum
 import pickle
-import sys
-import warnings
 
 import networkx
-
-try:
-    import pygraphviz
-except ImportError:
-    warnings.warn("Graph visualization disabled because pygraphviz is not installed")
+import pydot
 
 
 __author__ = "Chariton Karamitas <huku@census-labs.com>"
@@ -169,29 +163,31 @@ class _BaseGraph(networkx.MultiDiGraph):
         Args:
             path: Path to file to export graph to.
         """
-        if "pygraphviz" in sys.modules:
+        graph = pydot.Dot(graph_type="digraph")
+        graph.set_node_defaults(fontname="Courier", fontsize="10")
 
-            agraph = pygraphviz.AGraph(directed=True, splines="ortho")
-            agraph.node_attr.update(fontname="Courier", fontsize=10)
-
-            for node, data in self.nodes(data=True):
-                agraph.add_node(
+        for node, data in self.nodes(data=True):
+            graph.add_node(
+                pydot.Node(
                     node,
                     shape=NodeShape.from_node_type(data["node_type"]),
                     fillcolor=NodeColor.from_node_type(data["node_type"]),
                     style="filled",
                     label=data["name"],
                 )
+            )
 
-            for tail, head, data in self.edges(data=True):
-                agraph.add_edge(
+        for tail, head, data in self.edges(data=True):
+            graph.add_edge(
+                pydot.Edge(
                     tail,
                     head,
                     color=EdgeColor.from_edge_type(data["edge_type"]),
                     style=EdgeStyle.from_edge_class(data["edge_class"]),
                 )
+            )
 
-            agraph.write(path)
+        Path(path).write_text(graph.to_string())
 
     def store(self, path: Path | str) -> None:
         """Store graph to file.

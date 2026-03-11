@@ -10,8 +10,8 @@ dependencies = [
     "idapro>=0.0.7",
     "networkx",
     "numpy",
+    "pydot",
     "pygad",
-    # "pygraphviz",
 ]
 
 [project.scripts]
