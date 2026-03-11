@@ -388,6 +388,15 @@ wheels = [
 ]
 
 [[package]]
+name = "idapro"
+version = "0.0.7"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/65/b49019b4713b852349b6516b786c8542930aca7701bb2552b18f4e4a4e25/idapro-0.0.7.tar.gz", hash = "sha256:0b2e184b19e4d8404ea48b1f17f39b21b054931315940ee9716ef8559144988f", size = 966886, upload-time = "2025-10-29T09:07:21.695Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fb/5d/6e6565d9a1d6ecf1b48a2bea326f0e3dbe4c3199adfc0a5456b83d235f99/idapro-0.0.7-py3-none-any.whl", hash = "sha256:3cb8d48ac21a19e6a0ef65eacd0005a1f9c40a264a7bcb675914eaa20c6e1371", size = 1999440, upload-time = "2025-10-29T09:07:19.998Z" },
+]
+
+[[package]]
 name = "importlib-resources"
 version = "6.5.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1280,6 +1289,7 @@ name = "recover"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [
+    { name = "idapro" },
     { name = "networkx", version = "3.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "networkx", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -1291,6 +1301,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "idapro", specifier = ">=0.0.7" },
     { name = "networkx" },
     { name = "numpy" },
     { name = "pygad" },
