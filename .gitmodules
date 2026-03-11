@@ -1,3 +1,0 @@
-[submodule "src/recover/ida-venv"]
-	path = src/recover/ida-venv
-	url = https://github.com/Skwteinopteros/ida-venv
