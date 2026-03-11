@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     logging.config.fileConfig(str(path))
 
     logging.info("Opening IDB at %s", idb_path)
-    idapro.open_database(str(idb_path))
+    idapro.open_database(str(idb_path), run_auto_analysis=True)
 
     logging.info("Waiting for auto-analysis to finish")
     ida_auto.auto_wait()
