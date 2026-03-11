@@ -1,5 +1,5 @@
 install:
-	pip install .
+	uv sync
 
 clean:
 	rm -rf build dist
@@ -11,10 +11,10 @@ clean:
 	\) -prune -exec rm -rf \{\} \;
 
 uninstall:
-	pip uninstall -q -y recover
+	uv pip uninstall -q recover
 
 mypy:
-	mypy --config-file mypy.ini src/recover/
+	uv run mypy src/recover/
 
 pylint:
-	pylint --rcfile pylintrc src/recover/
+	uv run pylint --rcfile pylintrc src/recover/
